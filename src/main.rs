@@ -7,6 +7,7 @@ use embedded_hal::delay::DelayNs;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use esp_idf_svc::hal::gpio::AnyIOPin;
 use esp_idf_svc::hal::prelude::Peripherals;
+use esp_idf_svc::hal::reset::restart;
 use esp_idf_svc::hal::uart::{self, UartDriver};
 use esp_idf_svc::hal::units::Hertz;
 use esp_idf_svc::http::server::{Configuration, EspHttpServer};
@@ -56,6 +57,7 @@ fn main() {
         if let Err(e) = do_main() {
             log::error!("Error in do_main {e:?}");
             std::thread::sleep(Duration::from_secs(1));
+            restart();
         }
     }
 }
