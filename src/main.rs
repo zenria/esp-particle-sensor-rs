@@ -1,20 +1,18 @@
-use std::fmt::format;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
 use anyhow::{bail, Result};
 use embedded_hal::delay::DelayNs;
+use esp_idf_svc::eventloop::EspSystemEventLoop;
 use esp_idf_svc::hal::gpio::AnyIOPin;
 use esp_idf_svc::hal::prelude::Peripherals;
-use esp_idf_svc::hal::uart::{self, Uart, UartDriver};
+use esp_idf_svc::hal::uart::{self, UartDriver};
 use esp_idf_svc::hal::units::Hertz;
 use esp_idf_svc::http::server::{Configuration, EspHttpServer};
 use esp_idf_svc::http::Method;
 use esp_idf_svc::io::{EspIOError, Write};
 use esp_idf_svc::mqtt::client::{EspMqttClient, MqttClientConfiguration};
-use esp_idf_svc::{eventloop::EspSystemEventLoop, hal::peripherals};
-use log::info;
 use macaddr::MacAddr;
 use rgb_led::{RGB8, WS2812RMT};
 use sds011::{Measurement, SDS011};
@@ -33,8 +31,6 @@ pub struct Config {
     wifi_psk: &'static str,
     #[default("")]
     mqtt_broker_url: &'static str,
-    #[default("")]
-    mqtt_channel: &'static str,
 }
 
 const BLUE: RGB8 = RGB8::new(0, 0, 50);
@@ -163,7 +159,7 @@ fn do_main() -> Result<()> {
 
     let mqtt_config = MqttClientConfiguration::default();
     let mut client = EspMqttClient::new_cb(
-        CONFIG.mqtt_broker_url,
+        app_config.mqtt_broker_url,
         &mqtt_config,
         move |_message_event| {
             // ... your handler code here - leave this empty for now
@@ -216,8 +212,6 @@ fn do_main() -> Result<()> {
             Err(_) => log::error!("Unable to read channel"),
         }
     }
-
-    Ok(())
 }
 
 fn templated(content: impl AsRef<str>) -> String {

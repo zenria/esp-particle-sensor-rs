@@ -4,6 +4,8 @@ pub struct Config {
     wifi_ssid: &'static str,
     #[default("")]
     wifi_psk: &'static str,
+    #[default("")]
+    mqtt_broker_url: &'static str,
 }
 
 fn main() {
@@ -16,6 +18,10 @@ fn main() {
     let app_config = CONFIG;
     if app_config.wifi_ssid == "FBI Surveillance Van" || app_config.wifi_psk == "hunter2" {
         panic!("You need to set the Wi-Fi credentials in `cfg.toml`!");
+    }
+
+    if app_config.mqtt_broker_url == "" {
+        panic!("please set a mqtt broker url");
     }
 
     println!("cargo:rustc-env=TOML_CFG=require_cfg_present");
