@@ -1,4 +1,4 @@
-[hardware-check]
+[esp-particle-sensor-rs]
 wifi_ssid = "FBI Surveillance Van"
 wifi_psk = "hunter2"
 mqtt_broker_url = "mqtt://a.b.c.d"
