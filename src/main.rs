@@ -35,10 +35,10 @@ pub struct Config {
 }
 
 const BLUE: RGB8 = RGB8::new(0, 0, 50);
-const GREEN: RGB8 = RGB8::new(0, 50, 0);
+const GREEN: RGB8 = RGB8::new(100, 0, 0);
 const BLACK: RGB8 = RGB8::new(0, 0, 0);
-const RED: RGB8 = RGB8::new(100, 0, 0);
-const ORANGE: RGB8 = RGB8::new(255, 100, 0);
+const RED: RGB8 = RGB8::new(0, 100, 0);
+const ORANGE: RGB8 = RGB8::new(100, 255, 0);
 
 struct Delay;
 
