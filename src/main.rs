@@ -73,8 +73,6 @@ fn do_main() -> Result<()> {
     let peripherals = Peripherals::take().unwrap();
     let sysloop = EspSystemEventLoop::take()?;
 
-    log::info!("Hello, world!");
-
     let mut ws2812 = Ws2812Esp32Rmt::new(peripherals.rmt.channel0, peripherals.pins.gpio8)?;
 
     ws2812.write([RED])?;
